@@ -4,11 +4,12 @@ import java.awt.*;
 
 public class CalculadoraSwing extends JFrame {
 	
+	//Declaracion de variables	
 	private String[] botones = {" "," ","←","÷","7","8","9","x","4","5","6","-","1","2","3","+","CE","0",",","="};
 	
 	private JButton[] teclasNumericas;
 	
-	private JTextField texto;
+	private JTextField display;
 	
 	private JPanel panelTexto;
 	
@@ -36,31 +37,36 @@ public class CalculadoraSwing extends JFrame {
 		division = false;
 	}
 	
+	// Metodo que inicializa todo el apartado grafico y se les aplica estilos y eventos
 	private void inicializarBotones() {
+		//Panel principal que ocupara todo el JFRAME
 		panelPrincipal = new JPanel(new BorderLayout());
 		this.add(panelPrincipal);
 		
+		//Panel que contiene el display situado en la parte norte
 		panelTexto = new JPanel(new BorderLayout());
 		panelTexto.setPreferredSize(new Dimension(320, 75));
-		texto = new JTextField("0", 9);
-		panelTexto.add(texto, BorderLayout.CENTER);
+		display = new JTextField("0", 9);
+		panelTexto.add(display, BorderLayout.CENTER);
 		panelPrincipal.add(panelTexto, BorderLayout.NORTH);
 		
+		//panel que contiene los botones
 		panelTeclas = new JPanel(new GridLayout(5, 4));
 		panelPrincipal.add(panelTeclas, BorderLayout.CENTER);
 		
+		//Creacion de los botones y se les aplica el estilo
 		teclasNumericas = new JButton[botones.length];
 		
 		for (int i = 0; i < botones.length; i++) {
 			teclasNumericas[i] = new JButton(botones[i]);
-			//teclasNumericas[i].setContentAreaFilled(false);
 			teclasNumericas[i].setBackground(new Color(31, 31, 31));
 			teclasNumericas[i].setForeground(new Color(255, 255, 255));
 			teclasNumericas[i].setFont(new Font("Microsoft JhengHei UI", 1, 36));
 			teclasNumericas[i].setBorder(null);
 			teclasNumericas[i].setFocusable(false);
 		}
-	
+		
+		//Se aplican los eventos
 		for (JButton boton : teclasNumericas) {
 			boton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -71,23 +77,19 @@ public class CalculadoraSwing extends JFrame {
 			panelTeclas.add(boton);
 		}
 		
-		//Pruebas de aqui para abajo de visualizacion
+		//Estilos a los paneles
 		panelTexto.setBackground(new Color(31, 31, 31));
 		panelTeclas.setBackground(new Color(31, 31, 31));
 		
-		//texto.setBackground(new Color(31, 31, 31));
-		texto.setBackground(null);
-		texto.setForeground(new Color(255, 255, 255));
-		texto.setHorizontalAlignment(JTextField.RIGHT);
-		texto.setFont(new Font("Microsoft JhengHei UI", 1, 45));
-		texto.setBorder(null);
-		
-		setTitle("Calculadora");
-		
-		// Hasta aqui
+		//Estilo al display
+		display.setBackground(null);
+		display.setForeground(new Color(255, 255, 255));
+		display.setHorizontalAlignment(JTextField.RIGHT);
+		display.setFont(new Font("Microsoft JhengHei UI", 1, 45));
+		display.setBorder(null);
 	}
 	
-	// Donde se le aplica cada opcion al boton
+	// Metodo que filtra la funcion que debe hacer cada boton
 	private void accionBoton(JButton boton) {
 		String aCompararString = "0123456789";
 		if (aCompararString.contains(boton.getText())) {
@@ -99,7 +101,7 @@ public class CalculadoraSwing extends JFrame {
 		else if (boton.getText().equals("÷")) {
 			dividir();
 		}
-		else if (boton.getText().equals("X")) {
+		else if (boton.getText().equals("x")) {
 			multiplicar();
 		}
 		else if (boton.getText().equals("-")) {
@@ -108,83 +110,90 @@ public class CalculadoraSwing extends JFrame {
 		else if (boton.getText().equals("+")) {
 			suma();
 		}
+		else if (boton.getText().equals("CE")) {
+			borrarTodo();
+		}
 		else {
 			igual();
 		}
 	}
 	
-	// Introduccion de numeros en el display(texto)
+	// Introduccion de numeros en el display
 	private void numeros(JButton boton) {		
-		if (texto.getText().equals("0")) {
-			texto.setText(boton.getText());
+		if (display.getText().equals("0")) {
+			display.setText(boton.getText());
 		}
 		else {
-			texto.setText(texto.getText() + boton.getText());
+			display.setText(display.getText() + boton.getText());
 		}
 	}
 	
 	// Borrar de uno en uno
 	private void borrar() {
-		if (texto.getText().length() > 0) {
-			if (texto.getText().length() == 1) {
-				texto.setText("0");
+		if (display.getText().length() > 0) {
+			if (display.getText().length() == 1) {
+				display.setText("0");
 			}
 			else {
-				texto.setText(texto.getText().substring(0, texto.getText().length() - 1));
+				display.setText(display.getText().substring(0, display.getText().length() - 1));
 			}
 		}
+	}
+	
+	public void borrarTodo() {
+		display.setText("0");
+		resultado = 0;
+	}
+	
+	// Guarda el numero en la variable resultado
+	private void guardarNumero() {
+		resultado = Integer.parseInt(display.getText());
+		display.setText("0");
 	}
 	
 	// Division
 	private void dividir() {
 		division = true;
-		resultado = Integer.parseInt(texto.getText());
-		texto.setText("0");
+		guardarNumero();
 	}
 	
 	// Multiplicacion
 	private void multiplicar() {
 		multiplicacion = true;
-		resultado = Integer.parseInt(texto.getText());
-		texto.setText("0");
+		guardarNumero();
 	}
 	
 	// Resta
 	private void restar() {
 		resta = true;
-		resultado = Integer.parseInt(texto.getText());
-		texto.setText("0");
+		guardarNumero();
 	}
 	
 	// Suma
 	private void suma() {
 		suma = true;
-		resultado = Integer.parseInt(texto.getText());
-		texto.setText("0");
+		guardarNumero();
 	}
 	
 	// Al presionar el boton IGUAL
 	private void igual() {
 		if (suma) {
-			resultado += Integer.parseInt(texto.getText());
-			texto.setText(Integer.toString(resultado));
+			resultado += Integer.parseInt(display.getText());
 			suma = false;
 		}
 		else if (resta) {
-			resultado -= Integer.parseInt(texto.getText());
-			texto.setText(Integer.toString(resultado));
+			resultado -= Integer.parseInt(display.getText());
 			resta = false;
 		}
 		else if (multiplicacion) {
-			resultado *= Integer.parseInt(texto.getText());
-			texto.setText(Integer.toString(resultado));
+			resultado *= Integer.parseInt(display.getText());
 			multiplicacion = false;
 		}
 		else if (division) {
-			resultado /= Integer.parseInt(texto.getText());
-			texto.setText(Integer.toString(resultado));
+			resultado /= Integer.parseInt(display.getText());
 			division = false;
 		}
+		display.setText(Integer.toString(resultado));
 	}
 	
 	private void eventoCambioColor(JButton boton) {

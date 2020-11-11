@@ -8,6 +8,7 @@ public class main {
 		app.setSize(350, 520);
 		app.setResizable(false);
 		app.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		app.setTitle("CalculadoraSWING");
 	}
 
 }
