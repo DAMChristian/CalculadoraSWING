@@ -17,7 +17,9 @@ public class CalculadoraSwing extends JFrame {
 	
 	private JPanel panelPrincipal;
 	
-	private int resultado;
+	//private int resultado;
+	
+	private double resultado;
 	
 	private boolean suma;
 	
@@ -131,7 +133,7 @@ public class CalculadoraSwing extends JFrame {
 		}
 	}
 	
-	//
+	//Te permite añadir una coma para hacer operaciones con numeros decimales
 	private void addComa() {
 		if (!display.getText().contains(",")) {
 			display.setText(display.getText() + ",");
@@ -150,6 +152,7 @@ public class CalculadoraSwing extends JFrame {
 		}
 	}
 	
+	//Te permite borrar todo el display de botones y de la operacion guardada
 	public void borrarTodo() {
 		display.setText("0");
 		resultado = 0;
@@ -157,7 +160,7 @@ public class CalculadoraSwing extends JFrame {
 	
 	// Guarda el numero en la variable resultado
 	private void guardarNumero() {
-		resultado = Integer.parseInt(display.getText());
+		resultado = Double.parseDouble(display.getText().replaceAll(",", "."));
 		display.setText("0");
 	}
 	
@@ -188,22 +191,22 @@ public class CalculadoraSwing extends JFrame {
 	// Al presionar el boton IGUAL
 	private void igual() {
 		if (suma) {
-			resultado += Integer.parseInt(display.getText());
+			resultado += Double.parseDouble(display.getText().replaceAll(",", "."));
 			suma = false;
 		}
 		else if (resta) {
-			resultado -= Integer.parseInt(display.getText());
+			resultado -= Double.parseDouble(display.getText().replaceAll(",", "."));
 			resta = false;
 		}
 		else if (multiplicacion) {
-			resultado *= Integer.parseInt(display.getText());
+			resultado *= Double.parseDouble(display.getText().replaceAll(",", "."));
 			multiplicacion = false;
 		}
 		else if (division) {
-			resultado /= Integer.parseInt(display.getText());
+			resultado /= Double.parseDouble(display.getText().replaceAll(",", "."));
 			division = false;
 		}
-		display.setText(Integer.toString(resultado));
+		display.setText(Double.toString(resultado).replaceAll(".", ","));
 	}
 	
 	private void eventoCambioColor(JButton boton) {
