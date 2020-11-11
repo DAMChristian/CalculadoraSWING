@@ -98,6 +98,9 @@ public class CalculadoraSwing extends JFrame {
 		else if (boton.getText().equals("←")) {
 			borrar();
 		}
+		else if (boton.getText().equals("CE")) {
+			borrarTodo();
+		}
 		else if (boton.getText().equals("÷")) {
 			dividir();
 		}
@@ -110,8 +113,8 @@ public class CalculadoraSwing extends JFrame {
 		else if (boton.getText().equals("+")) {
 			suma();
 		}
-		else if (boton.getText().equals("CE")) {
-			borrarTodo();
+		else if (boton.getText().equals(",")) {
+			addComa();
 		}
 		else {
 			igual();
@@ -125,6 +128,13 @@ public class CalculadoraSwing extends JFrame {
 		}
 		else {
 			display.setText(display.getText() + boton.getText());
+		}
+	}
+	
+	//
+	private void addComa() {
+		if (!display.getText().contains(",")) {
+			display.setText(display.getText() + ",");
 		}
 	}
 	
