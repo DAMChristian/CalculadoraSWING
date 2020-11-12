@@ -206,7 +206,7 @@ public class CalculadoraSwing extends JFrame {
 			resultado /= Double.parseDouble(display.getText().replaceAll(",", "."));
 			division = false;
 		}
-		display.setText(Double.toString(resultado).replaceAll(".", ","));
+		display.setText(Double.toString(resultado).replaceAll(".", ","));		
 	}
 	
 	private void eventoCambioColor(JButton boton) {
