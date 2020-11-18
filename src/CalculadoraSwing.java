@@ -191,22 +191,22 @@ public class CalculadoraSwing extends JFrame {
 	// Al presionar el boton IGUAL
 	private void igual() {
 		if (suma) {
-			resultado += Double.parseDouble(display.getText().replaceAll(",", "."));
+			resultado += Double.parseDouble(display.getText().replace(",", "."));
 			suma = false;
 		}
 		else if (resta) {
-			resultado -= Double.parseDouble(display.getText().replaceAll(",", "."));
+			resultado -= Double.parseDouble(display.getText().replace(",", "."));
 			resta = false;
 		}
 		else if (multiplicacion) {
-			resultado *= Double.parseDouble(display.getText().replaceAll(",", "."));
+			resultado *= Double.parseDouble(display.getText().replace(",", "."));
 			multiplicacion = false;
 		}
 		else if (division) {
-			resultado /= Double.parseDouble(display.getText().replaceAll(",", "."));
+			resultado /= Double.parseDouble(display.getText().replace(",", "."));
 			division = false;
 		}
-		display.setText(Double.toString(resultado).replaceAll(".", ","));		
+		display.setText(Double.toString(resultado).replace(".", ","));		
 	}
 	
 	private void eventoCambioColor(JButton boton) {
